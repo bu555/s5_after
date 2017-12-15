@@ -36,12 +36,13 @@ router.use((req, resp, next) => {
 get接口，用于测试
 */
 router.get('/api/bz/getTest',(req,resp,next)=>{
-    HttpAgent.getHistoryToday();
+    // HttpAgent.getHistoryToday();
 
     
     console.log(req.url); //req.url获取URL
     console.log(req.query); //req.query获取查询信息 {id:'55'}
-    resp.json({msg:'操作成功',code:0});
+    resp.json({msg:'操作成功',code:0,data:'fetch'});
+    // resp.sendFile('../public/tuteng5.jpg')
 });
 /* 
 注册

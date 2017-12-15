@@ -8,7 +8,6 @@ var util = require('util');
 let app = express();
 //express-ws是express的一个中间件，借助其我们可以在express中实现websocket的功能。
 var expressWs = require('express-ws')(app);
-
 app.ws('/ws', function(ws, req) {  
     console.log(req)
     util.inspect(ws);  
