@@ -5,15 +5,10 @@ const querystring = require('querystring');
 let router = express.Router();
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
-//util 是一个Node.js 核心模块，提供常用函数的集合，用于弥补核心JavaScript 的功能 过于精简的不足。
-var util = require('util');  
-//express-ws是express的一个中间件，借助其我们可以在express中实现websocket的功能。
-var expressWs = require('express-ws')(express);
 
 const CtrlData = require('./ctrl_data_class');
 const Calc = require('./calc_class');
 const Token = require('./token');
-const HttpAgent = require('./http_agent');
 let userName = 'admin55';
 
 
@@ -32,18 +27,7 @@ router.use((req, resp, next) => {
 
     next(); 
 });
-/* 
-get接口，用于测试
-*/
-router.get('/api/bz/getTest',(req,resp,next)=>{
-    // HttpAgent.getHistoryToday();
 
-    
-    console.log(req.url); //req.url获取URL
-    console.log(req.query); //req.query获取查询信息 {id:'55'}
-    resp.json({msg:'操作成功',code:0,data:'fetch'});
-    // resp.sendFile('../public/tuteng5.jpg')
-});
 /* 
 注册
 入参：{userName:'',password:''}

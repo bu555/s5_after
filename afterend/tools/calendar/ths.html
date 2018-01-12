@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<br lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./jquery-1.12.2.min.js"></script>
+    <style>
+        img {
+            width:545px;
+            height:300px;
+            border:1px solid #ccc;
+        }
+    </style>
+</head>
+<br>
+<input type="button" id="next" value="前进"></br>
+    <img id='day' alt=""></br>
+    <!-- <button id="next">前进</button></br> -->
+    <img id='month' alt=""></br>
+    <img id='week' alt=""></br>
+    <script>
+        var arr = ['000001','000002','000003','000004','000005'];
+        var index = 0;
+        var src = "http://image.sinajs.cn/newchart/daily/n/sz000001.gif";
+        document.getElementById('day').setAttribute('src',src);
+        function nextHandle(){
+            console.log('8989');
+            index++;
+            var code = arr[index];
+            console.log(code)
+            src = "http://image.sinajs.cn/newchart/daily/n/sz"+code+".gif"
+            document.getElementById('day').setAttribute('src',src);
+        }
+        document.getElementById('next').onclick=nextHandle;
+        // let xhr = new XMLHttpRequest();
+        // xhr.open('get','http://hq.sinajs.cn/list=sh601006');
+        // xhr.onreadystatechange = function(){
+        //     if(xhr.readyState==4 && xhr.status==200){
+        //         var res = xhr.responseText;
+        //         console.log(res)
+        //     }
+        // }
+        // xhr.send();
+
+        // $.ajax({
+        //     url: "http://vip.stock.finance.sina.com.cn/corp/go.php/vCI_CorpInfo/stockid/000555.phtml",
+        //     type:'get',
+        //     dataType:'jsonp',
+        //     jsonp:"callback",
+        //     success:function(data) {
+
+        //         console.log(data);
+        //        }
+        //     });
+            
+
+
+        // function fetchHq(code){
+        // return new Promise(function(resolve,reject){
+        // var script = document.createElement("script");
+        // script.src="http://image.sinajs.cn/newchart/daily/n/sh000001.gif";
+        // script.onload = function(){
+        //     var data = window["hq_str_"+code];
+        //     script.parentNode.removeChild(script);
+        //     resolve(data);
+        // };
+        // script.onerror = reject;
+        // document.getElementsByTagName('HEAD').item(0).appendChild(script);
+        // })
+        // }
+        // fetchHq("sh601006").then(function(data){
+        //     console.log(data);
+        // })
+        </script>
+</body>
+</html>

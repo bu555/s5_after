@@ -51,14 +51,17 @@ class Calc {
         let day = parseInt(option.day);
         let hour = parseInt(option.hour);
         let minute = parseInt(option.minute);
+        let second = parseInt(option.second);
         // let dateObj = new Date(year+"-"+month+"-"+day); //用来计算农历的Date对象
         let dateObj = null; //用来计算农历的Date对象
         let lunarInfo = {
-            month:'', //农历月
-            day:'', //农历日
-            monthCH:'', //农历中文月
-            dayCH:'' //农历中文日
+            solar : formatDate(new Date(year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second))
+            // month:'', //农历月
+            // day:'', //农历日
+            // monthCH:'', //农历中文月
+            // dayCH:'' //农历中文日
         };
+        console.log(lunarInfo.solar);
         if(option.isLunar==="0"){ //农历
             if(option.isLeap==="1"){ //农历+闰月
                 let clacMonth = month + 1; 
@@ -94,15 +97,16 @@ class Calc {
             dateObj = new Date(year+"-"+month+"-"+day); 
         }
         //这里计算农历只是为获取农历信息（即在23时跳入前）
+        let _month;
         let getLunarRes = LunarCalendar.solarToLunar(dateObj.getFullYear(),dateObj.getMonth()+1,dateObj.getDate());
         if(getLunarRes.lunarLeapMonth!=0){
-            lunarInfo.month = getLunarRes.lunarMonth>getLunarRes.lunarLeapMonth?getLunarRes.lunarMonth-1:getLunarRes.lunarMonth;
+            _month = getLunarRes.lunarMonth>getLunarRes.lunarLeapMonth?getLunarRes.lunarMonth-1:getLunarRes.lunarMonth;
         }else{
-            lunarInfo.month = getLunarRes.lunarMonth;
+            _month = getLunarRes.lunarMonth;
         }
-        lunarInfo.day = getLunarRes.lunarDay;
-        lunarInfo.monthCH = getLunarRes.lunarMonthName;
-        lunarInfo.dayCH = getLunarRes.lunarDayName;
+        // lunarInfo.solar = formatDate(dateObj);
+        lunarInfo.lunar = _month+'-'+getLunarRes.lunarDay; //月和日
+        lunarInfo.lunarCH = getLunarRes.lunarMonthName+getLunarRes.lunarDayName; 
         //判断是否设定了23时跳入下一天
         if(option.isAuto23==="1"){
             if(option.hour==23){
@@ -125,22 +129,12 @@ class Calc {
         );
         bzInfo.lunarInfo = lunarInfo;
         return {code:0,msg:'ok',data:bzInfo}
-            //     year,
-        // let result = Calc.getCalendar(req.body.year,req.body.month,req.body.day);
-        // console.log(result)
-        // let bzInfo = BZ.getInfo(
-        //     year,
-        //     month,
-        //     day,
-        //     req.body.hour,
-        //     req.body.minute,
-        //     result.GanZhiYear,
-        //     result.GanZhiMonth,
-        //     result.GanZhiDay,
-        //     req.body.sex
-        // );
-        // resp.json({data:bzInfo,code:0,msg:"操作成功"})
-        // return BZ.getInfo(year,month,day,hour,minute,yearGZ,monthGZ,dayGZ,sex);
+        function formatDate(dateObj){
+            return dateObj.getFullYear()+"-"+trans(dateObj.getMonth()+1)+"-"+trans(dateObj.getDate())+" "+trans(dateObj.getHours())+":"+trans(dateObj.getMinutes())+":"+trans(dateObj.getSeconds());
+            function trans(num){
+              return num<10?'0'+num:num+''
+            }
+        }
     }
 }
 module.exports = Calc;
